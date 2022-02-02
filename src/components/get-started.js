@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
 
-const socket = io('https://git.heroku.com/a-chat-system.git')
+const socket = io('https://localhost:4000')
 
 
 export const GetStarted = () => {
