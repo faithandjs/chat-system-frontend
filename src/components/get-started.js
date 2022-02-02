@@ -1,10 +1,17 @@
-import React, {useState, memo} from 'react'
+import React, {useState, useCallback, useEffect} from 'react'
 import io from 'socket.io-client'
+import axios from 'axios'
 
-const socket = io('http://localhost:4000')
+const socket = io('https://git.heroku.com/a-chat-system.git')
+
 
 export const GetStarted = () => {
-
+    /*useEffect(
+        axios.get('https://git.heroku.com/a-chat-system.git').then(res => {
+            console.log(res)
+        }), []
+    )*/
+    
 const [clickBtn, setClickBtn] = useState(true)
 const [dm, setDm] = useState(false)
 const [hello, setHello] = useState(false)
@@ -74,19 +81,20 @@ function sentMsg (e){
   setMsg('')
 }
 
-function displayChat(){
-    return ( 
-        <div className='msg-area'>
-        {chat.map((item,index) => (
-            <div key={index} className={ 'text-box ' + item.color + ' ' + item.w}>
-                <div className='sender'>{item.name}</div>
-                <div className='msg-content'>{item.msg}</div>
+const displayChat = useCallback(
+    ()=>{
+         return ( 
+            <div className='msg-area'>
+            {chat.map((item,index) => (
+                <div key={index} className={ 'text-box ' + item.color + ' ' + item.w}>
+                    <div className='sender'>{item.name}</div>
+                    <div className='msg-content'>{item.msg}</div>
+                </div>
+                ))}
             </div>
-            ))}
-        </div>
-    )
-   }
-
+        )
+    }, [chat]
+)
 function lastItemTest(item, index){
     if (index == usersAvailable.length - 1){
         return item.charAt(0).toUpperCase() + item.slice(1) + '.'
@@ -136,3 +144,5 @@ function lastItemTest(item, index){
 
     )
 }
+
+/*   {https://}git.heroku.com/a-chat-system.git*/
